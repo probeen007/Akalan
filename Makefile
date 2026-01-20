@@ -13,16 +13,25 @@ DATA_DIR = data
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
 OBJECTS = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SOURCES))
 
+# Resource files
+RC_FILE = app.rc
+RES_FILE = $(BUILD_DIR)/app.res
+
 # Target executable
 TARGET = $(BUILD_DIR)/assignment_tracker.exe
 
 # Default target
 all: $(BUILD_DIR) $(DATA_DIR) $(TARGET)
 
+# Compile resource file
+$(RES_FILE): $(RC_FILE) | $(BUILD_DIR)
+	@echo "Compiling resource file..."
+	windres $(RC_FILE) -O coff -o $(RES_FILE)
+
 # Link object files to create executable
-$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS) $(RES_FILE)
 	@echo "Linking executable..."
-	$(CC) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
+	$(CC) $(OBJECTS) $(RES_FILE) -o $(TARGET) $(LDFLAGS)
 	@echo "========================================="
 	@echo "Build complete: $(TARGET)"
 	@echo "Run with: make run"
