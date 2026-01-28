@@ -40,12 +40,12 @@ desktop.ini
 *.pch
 
 # Libraries
-*.lib
+*lib
 *.a
 *.la
 
 # Shared objects
-*.dll
+
 *.so
 *.so.*
 *.dylib
